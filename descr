@@ -1,0 +1,5 @@
+ocamldoc plugin extending the HTML and LaTeX generators for more expressive comments.
+
+
+The cooldoc plugin extends the documentation language to allow mathematical expressions with
+UTF8 support. The resulting comments can be exported to HTML of LaTeX transparently.

@@ -1,0 +1,28 @@
+opam-version: "2.0"
+name: "cooldoc"
+version: "beta"
+maintainer: ["Julien Blond <julien.blond@demon-x.com"]
+authors: ["Julien Blond <julien.blond@demon-x.com"]
+homepage: ["https://www.github.com/Ninjapouet/cooldoc"]
+bug-reports: ["https://www.github.com/Ninjapouet/cooldoc/issues"]
+
+tags: ["ocamldoc" "doc"]
+build: [
+  ["dune" "build" "-p" name]
+]
+install: [
+  ["dune" "install" "-p" name]
+]
+remove: [
+  ["dune" "build" "@install"]
+  ["dune" "uninstall" "-p" name]
+]
+depends: [
+  "ocaml-base-compiler"
+  "dune"
+]
+synopsis: "Ocamldoc plugin extending the HTML and LaTeX generators for more expressive comments"
+description: "The cooldoc plugin extends the documentation language to allow mathematical
+              expressions with UTF8 support. The resulting comments can be exported to HTML
+              of LaTeX transparently."
+
