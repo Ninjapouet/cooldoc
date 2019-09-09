@@ -1,4 +1,10 @@
+(** An example *)
+
 (**
-   This is a math stuff {math λx.M}.
+   {1 Introduction}
+
+   This is a math stuff {math M ≝ v | λx.M | M M }.
 *)
+
+(** This is a value *)
 let foo = 42

@@ -26,8 +26,11 @@ module HTML (G : Odoc_html.Html_generator) = struct
 end
 
 
-let _ = try Odoc_args.extend_html_generator (module HTML) with
-  | Failure _ -> ();;
+let _ = Odoc_args.add_option (
+    "-html",
+    Arg.Unit (fun () -> Odoc_args.extend_html_generator (module HTML)),
+    Odoc_messages.generate_html
+  )
 
 module LaTeX (G : Odoc_latex.Latex_generator) = struct
 
@@ -50,19 +53,20 @@ module LaTeX (G : Odoc_latex.Latex_generator) = struct
       method private latex_document_class ppf =
         pf ppf "\\documentclass[11pt]{article}@\n";
 
-      method! latex_of_Raw ppf s = pr "%s@." s; pf ppf "%s" s
-
       method private latex_packages ppf =
-        pf ppf "\\usepackage[utf8]{inputenc}@\n";
-        pf ppf "\\usepackage[T1]{fontenc}@\n";
+        pf ppf "\\usepackage{unicode-math}@\n";
         pf ppf "\\usepackage{textcomp}@\n";
         pf ppf "\\usepackage{fullpage}@\n";
         pf ppf "\\usepackage{url}@\n";
         pf ppf "\\usepackage{ocamldoc}@\n"
 
+      method private latex_definitions ppf =
+        pf ppf "@\n"
+
       method! latex_header ppf module_list =
         self#latex_document_class ppf;
         self#latex_packages ppf;
+        self#latex_definitions ppf;
         begin match !Odoc_info.Global.title with
           | None -> ()
           | Some s ->
@@ -85,5 +89,8 @@ module LaTeX (G : Odoc_latex.Latex_generator) = struct
 
 end
 
-let _ = try Odoc_args.extend_latex_generator (module LaTeX) with
-  | Failure _ -> ();;
+let _ = Odoc_args.add_option (
+    "-latex",
+    Arg.Unit (fun () -> Odoc_args.extend_latex_generator (module LaTeX)),
+    Odoc_messages.generate_latex
+  )
