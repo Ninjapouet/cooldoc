@@ -1,0 +1,12 @@
+(alias
+ (name runtest)
+ (deps math.ml %{lib:cooldoc:cooldoc.cma})
+ (action (chdir math.html (run ocamldoc -g %{lib:cooldoc:cooldoc.cma} -html -o math ../math.ml))))
+
+(alias
+ (name runtest)
+ (deps math.ml %{lib:cooldoc:cooldoc.cma})
+ (action (chdir math.pdf
+                (progn
+                  (run ocamldoc -g %{lib:cooldoc:cooldoc.cma} -latex -o math.tex ../math.ml)
+                  (run pdflatex -interaction nonstopmode math.tex)))))
